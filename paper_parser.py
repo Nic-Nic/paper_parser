@@ -1,3 +1,29 @@
+# Copyright (C) 2020 Nicolàs Palacio
+#
+# Contact: nicolas.palacio@bioquant.uni-heidelberg.de
+#
+# GNU-GLPv3:
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License for more details.
+#
+# A full copy of the GNU General Public License can be found on
+# http://www.gnu.org/licenses/.
+#
+# Article URL parser
+# ==================
+#
+# The following script parses all files in all subfolders of the
+# specified main directory (e.g. Slack archive files) and extracts any
+# URL related/pointing to a scientific article.
+# DISCLAIMER: Performance of the extraction is highly dependent on the
+# provided excluder and includer keywords below
+
 import os
 import re
 
@@ -20,10 +46,10 @@ channeldirs = [i for i in os.listdir(maindir) if '.' not in i]
 # Find ANY URL (e.g. embedded tweets, replies, etc)
 # -> parsing JSONs as plain text
 for channeldir in channeldirs:
-    filenames = os.listdir(channeldir)
+    filenames = os.listdir(os.path.join(maindir, channeldir))
 
     for filename in filenames:
-        with open(os.path.join(channeldir, filename), 'r') as f:
+        with open(os.path.join(maindir, channeldir, filename), 'r') as f:
             # Removing escape character
             plaintxt = f.read().replace('\\', '')
             # Extracting urls
